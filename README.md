@@ -1,4 +1,4 @@
-# TEM_Competition
+# TEM Competition
 Allows for the cohorts to compete
 TEM Competition
 The Terrestrial Ecosystem Model (TEM)
