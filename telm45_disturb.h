@@ -98,7 +98,7 @@ class Telm45
 
      void initializeCohortTEMState( const int& pichrt );
 
-     void outputTEMmonth( const int& pdm );
+     void outputTEMmonth( const int& pdm, const int& ichrt );
 
      void readCohortState( ifstream& ifstate,
                            const int& pichrt );
@@ -203,7 +203,7 @@ class Telm45
 
 //     vector<string> predstr;
 
-     double output[NUMTEM][CYCLE];
+     double output[MAXCHRTS][NUMTEM][CYCLE];
 
      int outyr;
 

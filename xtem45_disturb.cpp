@@ -282,31 +282,31 @@ int main()
       updateTCLMGridCell( xdyr ); 
   // Copy TEMclm results to output variables
 
-  if( 1 == telmnt[0].clm.predflag )
-  {
-    if ( (1 == spinoutfg
-         && telmnt[0].year < telmnt[0].clm.startyr)
-         || (2 == spinoutfg
-         && telmnt[0].year >= (telmnt[0].clm.startyr-spinoutyrs))
-         || (telmnt[0].year >= telmnt[0].clm.startyr) )
-    {
-      if( 1 == telmnt[0].clm.cldflag )
+      if( 1 == telmnt[0].clm.predflag )
       {
-        telmnt[0].carea = cldsdat[0].carea;
-        telmnt[0].contnent = cldsdat[0].contnent;
-      }
-      else
-      {
-        telmnt[0].carea = nirrdat[0].carea;
-        telmnt[0].contnent = nirrdat[0].contnent;
-      }
-
-      telmnt[0].atmswritepred( fclmpred,
-                               xdyr,
-                               clmpredmap,
-                               telmnt[0].natmspred );
-    }
-  } 
+          if ( (1 == spinoutfg
+                && telmnt[0].year < telmnt[0].clm.startyr)
+               || (2 == spinoutfg
+                   && telmnt[0].year >= (telmnt[0].clm.startyr-spinoutyrs))
+               || (telmnt[0].year >= telmnt[0].clm.startyr) )
+          {
+              if( 1 == telmnt[0].clm.cldflag )
+              {
+                  telmnt[0].carea = cldsdat[0].carea;
+                  telmnt[0].contnent = cldsdat[0].contnent;
+              }
+              else
+              {
+                  telmnt[0].carea = nirrdat[0].carea;
+                  telmnt[0].contnent = nirrdat[0].contnent;
+              }
+              
+              telmnt[0].atmswritepred( fclmpred,
+                                       xdyr,
+                                       clmpredmap,
+                                       telmnt[0].natmspred );
+          }
+      } 
 
       // load all years of climate data into telm.climate[][][] variable
     }
@@ -2887,56 +2887,60 @@ void updateTTEMGridCell( const int& pdyr,
                  BEGIN VEGETATION MOSAIC LOOP
 ************************************************************* */
 
-  for( ichrt = 0; ichrt < telmnt[0].maxcohorts; ++ichrt )
+  for( dm = 0; dm < CYCLE; ++dm )
   {
-    // Get vegetation community type of cohort
+      for( ichrt = 0; ichrt < telmnt[0].maxcohorts; ++ichrt )
+      {
+          // Get vegetation community type of cohort
  
-  cout << "cohort_here = " << ichrt << " " << telmnt[0].cohort[ichrt].cmnt << " " << telmnt[0].cohort[ichrt].agcmnt  << endl;
-    telmnt[0].tem.veg.cmnt = telmnt[0].cohort[ichrt].cmnt;
+          cout << "cohort_here = " << ichrt << " " << telmnt[0].cohort[ichrt].cmnt << " " << telmnt[0].cohort[ichrt].agcmnt  << endl;
+          telmnt[0].tem.veg.cmnt = telmnt[0].cohort[ichrt].cmnt;
  
-    // Determine soil characteristics for cohort
+          // Determine soil characteristics for cohort
  
-    telmnt[0].tem.soil.xtext( telmnt[0].tem.veg.cmnt,
-                              telmnt[0].tem.soil.getPCTSILT(),
-                              telmnt[0].tem.soil.getPCTCLAY() );
+          telmnt[0].tem.soil.xtext( telmnt[0].tem.veg.cmnt,
+                                    telmnt[0].tem.soil.getPCTSILT(),
+                                    telmnt[0].tem.soil.getPCTCLAY() );
  
-    for( dm = 0; dm < CYCLE; ++dm )
-    {
-      // Run TEM
-      telmnt[0].updateTEMmonth( equil,
-                                totsptime,
-                                pdyr,
-                                dm,
-                                ichrt,
-                                rflog1 );
+          // Run TEM
+          telmnt[0].updateTEMmonth( equil,
+                                    totsptime,
+                                    pdyr,
+                                    dm,
+                                    ichrt,
+                                    rflog1 );
  
-    } // end of CYCLE loop
  
-    if( 2 == ostateflag && telmnt[0].tem.totyr == ostateyear )
-    {
-      telmnt[0].writeCohortState( ofstate, ichrt );
-    }
+          if (dm == CYCLE - 1) {
+
+              if( 2 == ostateflag && telmnt[0].tem.totyr == ostateyear )
+              {
+                  telmnt[0].writeCohortState( ofstate, ichrt );
+              }
  
-    if ( (1 == spinoutfg && telmnt[0].tem.totyr < telmnt[0].tem.startyr)
-          || (2 == spinoutfg
-          && telmnt[0].tem.totyr >= (telmnt[0].tem.startyr-spinoutyrs))
-          || (telmnt[0].tem.totyr >= telmnt[0].tem.startyr
-          && telmnt[0].tem.totyr <= telmnt[0].tem.endyr)
-          && 0 == (telmnt[0].wrtyr%telmnt[0].tem.diffyr) )
-    {
  
-      // Output TEM transient results for specified years to files
+
+              if ( (1 == spinoutfg && telmnt[0].tem.totyr < telmnt[0].tem.startyr)
+                   || (2 == spinoutfg
+                       && telmnt[0].tem.totyr >= (telmnt[0].tem.startyr-spinoutyrs))
+                   || (telmnt[0].tem.totyr >= telmnt[0].tem.startyr
+                       && telmnt[0].tem.totyr <= telmnt[0].tem.endyr)
+                   && 0 == (telmnt[0].wrtyr%telmnt[0].tem.diffyr) )
+              {
  
-      telmnt[0].temwritepred( ftempred,
-                              tempredmap,
-                              pdyr,
-                              ichrt,
-                              telmnt[0].ntempred,
-                              spinoutfg,
-                              1 );
+                  // Output TEM transient results for specified years to files
  
-    }
+                  telmnt[0].temwritepred( ftempred,
+                                          tempredmap,
+                                          pdyr,
+                                          ichrt,
+                                          telmnt[0].ntempred,
+                                          spinoutfg,
+                                          1 );
  
+              } // end of CYCLE loop
+          }
+      }
   } // End of cohort loop
  
 };
