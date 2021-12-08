@@ -52,7 +52,7 @@ tco2dat45.o : tco2dat45.cpp tco2dat45.h
 telvdat45.o : telvdat45.cpp telvdat45.h
 	${CXX} ${CFLAGS} -c telvdat45.cpp
 
-telm45_disturb_competition.o : telm45_disturb_competition.cpp telm45_disturb.h
+telm45_disturb_competition.o : telm45_disturb_competition.cpp telm45_disturb_competition.h
 	${CXX} ${CFLAGS} -c telm45_disturb_competition.cpp
 
 tlcluc45a.o : tlcluc45a.cpp tlcluc45a.h

@@ -1,7 +1,7 @@
 /* *************************************************************
 atmdepdat.CPP - object to read and write the structure of
                    land use/land cover data from/to files
-/
+
 Modifications:
 
 20060422 - DWK created by modifying lulcdat437.cpp
