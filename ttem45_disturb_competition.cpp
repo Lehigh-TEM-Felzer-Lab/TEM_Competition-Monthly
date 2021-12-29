@@ -5356,6 +5356,9 @@ else if ( disturbflag ==  4 && pdm == (disturbmonth-1)) //hurricane-strength sto
 	prevy[I_SEEDC][ichrt] = y[I_SEEDC][ichrt] = ZERO;
     prevy[I_SEEDN][ichrt] = y[I_SEEDN][ichrt] = ZERO;
 
+//  BSF
+// give a shot of nitrogen to allow forest to grow back better
+      prevy[I_AVLN] = y[I_AVLN] = y[I_AVLN] + 15.0;
 
     // Update soil texture-dependent vegetation parameters
     //   for natural vegetation
@@ -5499,7 +5502,7 @@ cseed = 0.0;
 
 //   set irrigation
 
- if( ag.irrg1950flag == 1 && 3 == ag.state & ag.getGROWDD() >= ag.getGDDSEED(ag.cmnt) && ag.getGROWDD() <=ag.getGDDHARVST(ag.cmnt)) {
+ if( ag.irrg1950flag == 1 && ag.state >= 0 & ag.getGROWDD() >= ag.getGDDSEED(ag.cmnt) && ag.getGROWDD() <=ag.getGDDHARVST(ag.cmnt)) {
   if(atms.getPREC() < 200)
    {
     ag.irrigate = 200.0-atms.getPREC();

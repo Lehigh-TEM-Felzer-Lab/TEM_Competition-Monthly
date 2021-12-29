@@ -2194,7 +2194,27 @@ cout << "veg.cmnt = " << tem.veg.cmnt << endl;
       rflog1 << " during month " << (dm+1) << endl;
       break;
     }
+//
+//  BSF add fert and irrg to allow for it during equilibration, to match the cal
+//  ibration
+//
+    if( 1 == tem.ag.fertflag )
+    {
+      tem.ag.fert1950flag = 1;
+    }
+    else
+    {
+      tem.ag.fert1950flag = 0;
+    }
 
+    if( 1 == tem.ag.irrgflag )
+    {
+      tem.ag.irrg1950flag = 1;
+    }
+    else
+    {
+      tem.ag.irrg1950flag = 0;
+    }
 
     // determine avg. tair of initial year
       
